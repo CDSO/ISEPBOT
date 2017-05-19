@@ -34,6 +34,7 @@ client.on('message', msg => {
 
   // If message is hello, post hello too
   if (msg.content === 'hello') {
+<<<<<<< HEAD
     msg.channel.sendMessage("Hello Warrior, Let's fight !")
   }
 
@@ -138,6 +139,12 @@ client.on('message', msg => {
       trueBotName = pokemonToBe
       setPokemon(pokemonToBe, msg)
     }
+=======
+    msg.channel.send('Hello to you too, fellow !')
+  }
+  if (msg.content === 'Quoi') {
+    msg.channel.send('Feur')
+>>>>>>> bot
   }
 
   var stream = T.stream('user')
