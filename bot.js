@@ -1,6 +1,22 @@
 const Discord = require('discord.js')
+var Twit = require('twit')
 const config = require('./config.js')
+var T = new Twit(config)
 const client = new Discord.Client()
+
+var tweet = {
+  status: 'Je vaincrai !!'
+}
+
+T.post('statuses/update', tweet, tweeted)
+
+function tweeted (err, data, response) {
+  if (err) {
+    console.log('Il y a une erreur')
+  } else {
+    console.log('Ca roule')
+  }
+}
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.username}!`)
