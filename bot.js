@@ -34,7 +34,6 @@ client.on('message', msg => {
 
   // If message is hello, post hello too
   if (msg.content === 'hello') {
-<<<<<<< HEAD
     msg.channel.sendMessage("Hello Warrior, Let's fight !")
   }
 
@@ -139,12 +138,6 @@ client.on('message', msg => {
       trueBotName = pokemonToBe
       setPokemon(pokemonToBe, msg)
     }
-=======
-    msg.channel.send('Hello to you too, fellow !')
-  }
-  if (msg.content === 'Quoi') {
-    msg.channel.send('Feur')
->>>>>>> bot
   }
 
   var stream = T.stream('user')
@@ -155,6 +148,50 @@ client.on('message', msg => {
       msg.channel.sendMessage('@' + Msg.user.screen_name + ' vous a envoyé le tweet suivant : ' + Msg.text)
     }
   })
+  var spotify = require('spotify')
+  if (msg.content.startsWith('!spotify')) {
+    var args = msg.content.split(' ').slice(1)
+    if (args[0] !== '!artist' && args[0] !== '!track' && args[0] !== '!album') {
+      spotify.search({ type: 'artist,track,album', query: args.join(' ') }, function (err, data) {
+        if (err) {
+          msg.channel.send('Il y eu une erreur')
+        }
+        msg.channel.send('__**Artiste**__ : ' + data.artists.items[0].name)
+        msg.channel.send(data.artists.items[0].external_urls.spotify)
+        msg.channel.send('__**Album**__ : ' + data.albums.items[0].name)
+        msg.channel.send(data.albums.items[0].external_urls.spotify)
+        msg.channel.send('__**Titre**__ : ' + data.tracks.items[0].name)
+        msg.channel.send(data.tracks.items[0].external_urls.spotify)
+      })
+    }
+    if (args[0] === '!artist') {
+      spotify.search({ type: 'artist', query: args.join(' ').substring(7) }, function (err, data) {
+        if (err) {
+          msg.channel.send('Il y eu une erreur')
+        }
+        msg.channel.send('__**Artiste**__ : ' + data.artists.items[0].name)
+        msg.channel.send(data.artists.items[0].external_urls.spotify)
+      })
+    }
+    if (args[0] === '!album') {
+      spotify.search({ type: 'album', query: args.join(' ').substring(6) }, function (err, data) {
+        if (err) {
+          msg.channel.send('Il y eu une erreur')
+        }
+        msg.channel.send('__**Album**__ : ' + data.albums.items[0].name)
+        msg.channel.send(data.albums.items[0].external_urls.spotify)
+      })
+    }
+    if (args[0] === '!track') {
+      spotify.search({ type: 'track', query: args.join(' ').substring(6) }, function (err, data) {
+        if (err) {
+          msg.channel.send('Il y eu une erreur')
+        }
+        msg.channel.send('__**Titre**__ : ' + data.tracks.items[0].name)
+        msg.channel.send(data.tracks.items[0].external_urls.spotify)
+      })
+    }
+  }
 })
 
 function setPokemon (pokemonToBe, msg) {
