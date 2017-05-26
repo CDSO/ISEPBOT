@@ -21,12 +21,16 @@ client.on('message', msg => {
   caractere = caractere.substring(7)
 
   if (msg.content === '!tweet ' + caractere) {
-    var tweet = {
-      status: caractere
+    if (caractere.length < 141) {
+      var tweet = {
+        status: caractere
+      }
+      var T = new Twit(config)
+      T.post('statuses/update', tweet)
+      msg.channel.send("C'est bon, je tweet !")
+    } else {
+      msg.channel.send('Ton tweet est trop long. Tu te moques de moi !? ')
     }
-    var T = new Twit(config)
-    T.post('statuses/update', tweet)
-    msg.channel.send("C'est bon, je tweet !")
   }
 })
 
