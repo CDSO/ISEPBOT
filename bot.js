@@ -1,7 +1,12 @@
 const Discord = require('discord.js')
 var Twit = require('twit')
 const config = require('./config.js')
+var T = new Twit(config)
 const client = new Discord.Client()
+
+//
+//  filter the twitter public stream by the word 'mango'.
+//
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.username}!`)
@@ -25,15 +30,23 @@ client.on('message', msg => {
       var tweet = {
         status: caractere
       }
-      var T = new Twit(config)
       T.post('statuses/update', tweet)
       msg.channel.send("C'est bon, je tweet !")
     } else {
       msg.channel.send('Ton tweet est trop long. Tu te moques de moi !? ')
     }
   }
+
+  var stream = T.stream('user')
+
+  stream.on('tweet', function (tweet) {
+    var replyto = tweet.in_reply_to_screen_name
+    var text = tweet.text
+    var from = tweet.user.screen_name
+    if (replyto === 'Munchkin_ISEP') {
+      msg.channel.sendMessage('@' + from + " t'a taggué dans ce tweet : " + text)
+    }
+  })
 })
-
-
 
 client.login(config.token)
