@@ -4,10 +4,6 @@ const config = require('./config.js')
 var T = new Twit(config)
 const client = new Discord.Client()
 
-//
-//  filter the twitter public stream by the word 'mango'.
-//
-
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.username}!`)
 })
@@ -42,7 +38,7 @@ client.on('message', msg => {
   stream.on('tweet', function (Msg) {
     var replyto = Msg.in_reply_to_screen_name
     if (replyto === 'Munchkin_ISEP') {
-      msg.channel.send('@' + Msg.user.screen_name + ' vous a envoyé le tweet suivant : ' + Msg.text)
+      msg.channel.sendMessage('@' + Msg.user.screen_name + ' vous a envoyé le tweet suivant : ' + Msg.text)
     }
   })
 })
