@@ -31,20 +31,18 @@ client.on('message', msg => {
         status: caractere
       }
       T.post('statuses/update', tweet)
-      msg.channel.send("C'est bon, je tweet !")
+      msg.channel.sendMessage("C'est bon, je tweet !")
     } else {
-      msg.channel.send('Ton tweet est trop long. Tu te moques de moi !? ')
+      msg.channel.sendMessage('Ton tweet est trop long. Tu te moques de moi !? ')
     }
   }
 
   var stream = T.stream('user')
 
-  stream.on('tweet', function (tweet) {
-    var replyto = tweet.in_reply_to_screen_name
-    var text = tweet.text
-    var from = tweet.user.screen_name
+  stream.on('tweet', function (Msg) {
+    var replyto = Msg.in_reply_to_screen_name
     if (replyto === 'Munchkin_ISEP') {
-      msg.channel.sendMessage('@' + from + " t'a taggué dans ce tweet : " + text)
+      msg.channel.send('@' + Msg.user.screen_name + ' vous a envoyé le tweet suivant : ' + Msg.text)
     }
   })
 })
