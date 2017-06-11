@@ -1,0 +1,7 @@
+bin/
+bin/sdk/
+bin/sdk/putty.exe
+bin/sdk/winkeygen.exe
+bin/sdk/plink.exe
+bin/sdk/pscp.exe
+bin/sdk/LICENSE
