@@ -120,6 +120,38 @@ client.on('message', msg => {
       console.log('Something went wrong when retrieving an access token', err)
     })
   }
+  var weather = require('Openweather-Node')
+    // set your API key if you have one
+  weather.setAPPID('e7ee6e42be52218f259c8060581b6a3c')
+    // set the culture
+  weather.setCulture('fr')
+    // set the forecast type
+  weather.setForecastType('daily')
+
+  if (msg.content.startsWith('!weather') || msg.content.startsWith('!forecast')) {
+    var location = msg.content.split(' ').slice(1)
+    if (msg.content.startsWith('!weather')) {
+      weather.now(location, function (err, data) {
+        if (err) {
+          console.log('Something wrong', err)
+        }
+        msg.channel.send('Météo d\'aujoud\'hui à ' + location + ' : ' + data[0].getDegreeTemp().temp + '°C, ' + data[0].values.weather[0].description)
+      })
+    }
+    if (msg.content.startsWith('!forecast')) {
+      weather.forecast(location, function (err, data) {
+        if (err) {
+          console.log('Something wrong', err)
+        }
+        var days = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi']
+        var d = new Date()
+        for (var i = 1; i < 6; i++) {
+          var dayName = days[d.getDay() + i]
+          msg.channel.send(dayName + ' il fera : ' + data[0].getDegreeTemp(i).temp + '°C à ' + location)
+        }
+      })
+    }
+  }
 })
 
 client.login(config.token)
