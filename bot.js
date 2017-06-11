@@ -1,5 +1,7 @@
 const Discord = require('discord.js')
+var Twit = require('twit')
 const config = require('./config.js')
+var T = new Twit(config)
 const client = new Discord.Client()
 
 client.on('ready', () => {
@@ -13,8 +15,32 @@ client.on('message', msg => {
 
   // If message is hello, post hello too
   if (msg.content === 'hello') {
-    msg.channel.sendMessage('Hello to you too, fellow !')
+    msg.channel.sendMessage("Hello Warrior, Let's fight !")
   }
+
+  var caractere = msg.content
+  caractere = caractere.substring(7)
+
+  if (msg.content === '!tweet ' + caractere) {
+    if (caractere.length < 141) {
+      var tweet = {
+        status: caractere
+      }
+      T.post('statuses/update', tweet)
+      msg.channel.sendMessage("C'est bon, je tweet !")
+    } else {
+      msg.channel.sendMessage('Ton tweet est trop long. Tu te moques de moi !? ')
+    }
+  }
+
+  var stream = T.stream('user')
+
+  stream.on('tweet', function (Msg) {
+    var replyto = Msg.in_reply_to_screen_name
+    if (replyto === 'Munchkin_ISEP') {
+      msg.channel.sendMessage('@' + Msg.user.screen_name + ' vous a envoyé le tweet suivant : ' + Msg.text)
+    }
+  })
 })
 
 client.login(config.token)
