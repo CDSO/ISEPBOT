@@ -4,12 +4,10 @@ Bot Discord développé dans le cadre d'un devoir en architecture des SI
 
 Auteurs : Pauline Creppy, Stéphane Dennery, Alexandra Obertelli, Benjamin Song
 
+Lien pour lancer le bot (Microsoft Azure) : http://isepbot.azurewebsites.net/
+
 Spotify
 ----------
-#### Installation
-```
-npm install spotify-web-api-node
-```
 #### Commandes
 Commande principale
 ```
@@ -23,10 +21,6 @@ Pour ne pas avoir un résultat de chaque, on peut préciser à l'aide d'une autr
 ```
 OpenWeatherMap
 ----------
-#### Installation
-```
-npm install openweather-node
-```
 #### Commandes
 Pour obtenir la météo actuelle d'une ville (le nom de ville doit être en anglais) : 
 ```
@@ -36,16 +30,10 @@ Pour obtenir les prévisions de la météo sur 5 jours d'une ville (le nom de vi
 ```
 !forecast <ville>           
 ```
-**Attention** : La fonction !forecast ne fonctionne pas toujours (raison inconnue), si le bot cesse de fonctionner, relancer le bot et réessayer
+**Attention** : La fonction !forecast ne fonctionne pas toujours (raison inconnue), si le bot cesse de fonctionner, relancer le bot et réessayer (A tester en dernier)
 
 Google Translate
 ---------
-#### Installation
-Suivre les indications d'installations sur ces deux liens (pour  Windows) :
-https://cloud.google.com/sdk/docs/quickstart-windows et 
-https://cloud.google.com/translate/docs/reference/libraries#client-libraries-resources-nodejs
-Il faudra créer un nouveau projet, lors du suivi des instructions : le nommer "Google ChatBot"
-
 #### Commandes
 Les commandes pour demander au bot de traduire sont : 
 ```
@@ -61,25 +49,16 @@ La commande translate est lente à fonctionner.
 
 Pokemon
 -------
-#### Installation
-```
-npm install pokeapi
-```
 #### Commandes
 Les commandes sont : 
 ```
 !pokemon <nomDuPokemon>
 !pokemon evolve
 ```
-Son avatar change, et le pokemon donne ses caractéristiques. Il existe encore quelques problèmes avec le changement de nom (qui surviennent à cause de la limite de changement de nom)
-
+Son avatar change, et le pokemon donne ses caractéristiques.
 
 Youtube
 -------
-#### Installation
-```
-npm install youtube-node
-```
 #### Commandes
 Commande principale pour obtenir 3 résultats :
 ```
@@ -87,11 +66,6 @@ Commande principale pour obtenir 3 résultats :
 ```
 Twitter
 -------
-#### Installation
-```
-npm install twitter
-npm install twit
-```
 #### Commandes
 Commande pour écrire un tweet :
 ```
