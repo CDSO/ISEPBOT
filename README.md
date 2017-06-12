@@ -69,3 +69,16 @@ Les commandes sont :
 !pokemon evolve
 ```
 Son avatar change, et le pokemon donne ses caractéristiques. Il existe encore quelques problèmes avec le changement de nom (qui surviennent à cause de la limite de changement de nom) et l'évolution du pokemon
+
+
+Youtube
+-------
+#### Installation
+```
+npm install youtube-node
+```
+#### Commandes
+Commande principale pour obtenir 3 résultats :
+```
+!youtube <recherche souhaitée>
+```
