@@ -4,7 +4,7 @@ const client = new Discord.Client()
 const config = require('./config.js')
 
 const Translate = require('@google-cloud/translate')
-const projectId = 'discordchatbottranslation'
+const projectId = 'Google Chat'
 const translateClient = Translate({
   projectId: projectId
 })
@@ -21,16 +21,24 @@ youTube.setKey('AIzaSyAGo3CB1AHk8okk32VDQ3F9qAyi47oMPq0')
 var Twit = require('twit')
 var T = new Twit(config)
 
+const pokemonClient = require('pokeapi')
+var pokeAPI = pokemonClient.v1()
+
+// Instantiates a client
 client.on('ready', () => {
   console.log('Logged in as ' + client.user.username + '!')
   pokemonToBe = client.user.username
-  trueBotName = client.user.username
 })
 
 client.on('message', (message) => {
   var author = message.author
   var messageArray = message.content.split(' ')
+})
 
+client.on('message', msg => {
+  // Check if the message has been posted in a channel where the bot operates
+  // and that the author is not the bot itself
+  if (msg.channel.type !== 'dm' && (config.channel[msg.channel.id] !== msg.author.id === client.user.id)) return
   if (message.channel.type !== 'dm' && (config.channel[message.channel.id] !== message.author.id === client.user.id)) {
     return
   } else if (message.content === 'botname') {
@@ -157,6 +165,7 @@ client.on('message', (message) => {
   })
 })
 
+
 function setPokemon (pokemonToBe, message) {
   pokeAPI.get({ resource_uri: '/api/v2/pokemon/' + pokemonToBe + '/' }).then(function (pokemon) {
     var nationalID = pokemon.id
@@ -193,3 +202,4 @@ function setPokemon (pokemonToBe, message) {
 }
 
 client.login(config.token)
+
