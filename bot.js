@@ -156,52 +156,6 @@ client.on('message', msg => {
     }
   })
 
-//  Old code for Spotify library
-/*  var spotify = require('spotify')
-  if (msg.content.startsWith('!spotify')) {
-    var args = msg.content.split(' ').slice(1)
-    if (args[0] !== '!artist' && args[0] !== '!track' && args[0] !== '!album') {
-      spotify.search({ type: 'artist,track,album', query: args.join(' ') }, function (err, data) {
-        if (err) {
-          msg.channel.send('Il y eu une erreur')
-        }
-        msg.channel.send('__**Artiste**__ : ' + data.artists.items[0].name)
-        msg.channel.send(data.artists.items[0].external_urls.spotify)
-        msg.channel.send('__**Album**__ : ' + data.albums.items[0].name)
-        msg.channel.send(data.albums.items[0].external_urls.spotify)
-        msg.channel.send('__**Titre**__ : ' + data.tracks.items[0].name)
-        msg.channel.send(data.tracks.items[0].external_urls.spotify)
-      })
-    }
-    if (args[0] === '!artist') {
-      spotify.search({ type: 'artist', query: args.join(' ').substring(7) }, function (err, data) {
-        if (err) {
-          msg.channel.send('Il y eu une erreur')
-        }
-        msg.channel.send('__**Artiste**__ : ' + data.artists.items[0].name)
-        msg.channel.send(data.artists.items[0].external_urls.spotify)
-      })
-    }
-    if (args[0] === '!album') {
-      spotify.search({ type: 'album', query: args.join(' ').substring(6) }, function (err, data) {
-        if (err) {
-          msg.channel.send('Il y eu une erreur')
-        }
-        msg.channel.send('__**Album**__ : ' + data.albums.items[0].name)
-        msg.channel.send(data.albums.items[0].external_urls.spotify)
-      })
-    }
-    if (args[0] === '!track') {
-      spotify.search({ type: 'track', query: args.join(' ').substring(6) }, function (err, data) {
-        if (err) {
-          msg.channel.send('Il y eu une erreur')
-        }
-        msg.channel.send('__**Titre**__ : ' + data.tracks.items[0].name)
-        msg.channel.send(data.tracks.items[0].external_urls.spotify)
-      })
-    }
-  } */
-
   if (msg.content.startsWith('!spotify')) {
     // Create the api object with the credentials
     var SpotifyWebApi = require('spotify-web-api-node')
@@ -266,7 +220,7 @@ client.on('message', msg => {
         if (err) {
           console.log('Something wrong', err)
         }
-        msg.channel.send('Météo d\'aujoud\'hui à ' + location + ' : ' + data[0].getDegreeTemp().temp + '°C, ' + data[0].values.weather[0].description)
+        msg.channel.send('Météo d\'aujoud\'hui à ' + location + ' : ' + data[0].getDegreeTemp().temp.toFixed(2) + '°C, ' + data[0].values.weather[0].description)
       })
     }
     if (msg.content.startsWith('!forecast')) {
@@ -278,7 +232,7 @@ client.on('message', msg => {
         var d = new Date()
         for (var i = 1; i < 6; i++) {
           var dayName = days[d.getDay() + i]
-          msg.channel.send(dayName + ' il fera : ' + data[0].getDegreeTemp(i).temp + '°C à ' + location)
+          msg.channel.send(dayName + ' il fera : ' + data.values.list[i].temp.day - 273.15).toFixed(2) + '°C à ' + location)
         }
       })
     }
