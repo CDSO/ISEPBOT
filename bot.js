@@ -18,10 +18,8 @@ weather.setCulture('fr')
 // set the forecast type
 weather.setForecastType('daily')
 
-const Translate = require('@google-cloud/translate')
-const projectId = 'Google ChatBot'
-const translateClient = Translate({
-  projectId: projectId
+const translate = require('@google-cloud/translate')({
+  key: 'AIzaSyB8tiUqfxBqbSe6Sl1lKcxc4lCPF4AKSMY'
 })
 
 var YouTube = require('youtube-node')
@@ -112,10 +110,10 @@ client.on('message', msg => {
     const targetLanguage = messageArray[messageArray.length - 1]
     var messageToTranslate = messageArray.slice(1, messageArray.length - 1)
     var text = messageToTranslate.join(' ')
-    translateClient.translate(text, targetLanguage)
+    translate.translate(text, targetLanguage)
         .then((results) => {
           const translation = results[0]
-          msg.channel.send(author + 'says : ' + translation)
+          msg.channel.send(author + ' says : ' + translation)
         })
         .catch((err) => {
           console.error('ERROR:', err)
