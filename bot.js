@@ -47,20 +47,8 @@ client.on('message', msg => {
       msg.channel.sendMessage('Ton tweet est trop long. Tu te moques de moi !? ')
     }
   }
-
-  var stream = T.stream('user')
-
-  stream.on('tweet', function (Msg) {
-    var replyto = Msg.in_reply_to_screen_name
-    if (replyto === 'Munchkin_ISEP') {
-      msg.channel.sendMessage('@' + Msg.user.screen_name + ' vous a envoyé le tweet suivant : ' + Msg.text)
-    }
-  })
-})
-
-client.on('message', (message) => {
-  var author = message.author
-  var messageArray = message.content.split(' ')
+  var author = msg.author
+  var messageArray = msg.content.split(' ')
 
   if (messageArray[0] === '!translate') {
     const targetLanguage = messageArray[messageArray.length - 1]
@@ -74,7 +62,7 @@ client.on('message', (message) => {
     translateClient.translate(text, targetLanguage)
         .then((results) => {
           const translation = results[0]
-          message.channel.send(author + translation)
+          msg.channel.send(author + translation)
         })
         .catch((err) => {
           console.error('ERROR:', err)
@@ -96,18 +84,27 @@ client.on('message', (message) => {
           } else {
             pokemonToBe = trueBotName
           }
-          setPokemon(pokemonToBe, message)
+          setPokemon(pokemonToBe, msg)
         })
       })
     } else {
       pokemonToBe = messageArray[1]
       trueBotName = pokemonToBe
-      setPokemon(pokemonToBe, message)
+      setPokemon(pokemonToBe, msg)
     }
   }
+
+  var stream = T.stream('user')
+
+  stream.on('tweet', function (Msg) {
+    var replyto = Msg.in_reply_to_screen_name
+    if (replyto === 'Munchkin_ISEP') {
+      msg.channel.sendMessage('@' + Msg.user.screen_name + ' vous a envoyé le tweet suivant : ' + Msg.text)
+    }
+  })
 })
 
-function setPokemon (pokemonToBe, message) {
+function setPokemon (pokemonToBe, msg) {
   pokeAPI.get({ resource_uri: '/api/v2/pokemon/' + pokemonToBe + '/' }).then(function (pokemon) {
     var nationalID = pokemon.id
     var pokemonName = pokemon.name
@@ -139,7 +136,7 @@ function setPokemon (pokemonToBe, message) {
 
     var finalMessage = "Hello, I'm " + pokemonName + '. In the pokedex, you will find me at id ' + nationalID + '.\n' + typesFinal + 'I weigth ' + pokemonWeight / 10 + ' kg and measure ' + pokemonHeight / 10 + ' m.'
 
-    message.channel.send(finalMessage)
+    msg.channel.send(finalMessage)
   })
 }
 
