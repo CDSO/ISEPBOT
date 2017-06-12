@@ -97,6 +97,7 @@ client.on('message', msg => {
       }
     })
   }
+
   var author = msg.author
   var messageArray = msg.content.split(' ')
 
