@@ -52,6 +52,7 @@ client.on('message', msg => {
     }
   }
 
+  caractere = msg.content
   caractere = caractere.substring(9)
   if (msg.content === '!youtube ' + caractere) {
     youTube.search(caractere, 3, function (error, result) {
@@ -95,14 +96,15 @@ client.on('message', msg => {
         msg.channel.sendMessage('https://www.youtube.com/watch?v=' + JSON.stringify(result.items[2].id.videoId, null, 2).substring(1, JSON.stringify(result.items[2].id.videoId, null, 2).length - 1))
       }
     })
-    var author = msg.author
-    var messageArray = msg.content.split(' ')
+  }
+  var author = msg.author
+  var messageArray = msg.content.split(' ')
 
-    if (messageArray[0] === '!translate') {
-      const targetLanguage = messageArray[messageArray.length - 1]
-      var messageToTranslate = messageArray.slice(1, messageArray.length - 1)
-      var text = messageToTranslate.join(' ')
-      translateClient.translate(text, targetLanguage)
+  if (messageArray[0] === '!translate') {
+    const targetLanguage = messageArray[messageArray.length - 1]
+    var messageToTranslate = messageArray.slice(1, messageArray.length - 1)
+    var text = messageToTranslate.join(' ')
+    translateClient.translate(text, targetLanguage)
         .then((results) => {
           const translation = results[0]
           msg.channel.send(author + 'says : ' + translation)
@@ -110,33 +112,33 @@ client.on('message', msg => {
         .catch((err) => {
           console.error('ERROR:', err)
         })
-    } else if (messageArray[0] === '!pokemon') {
-      if (messageArray[1] === 'evolve') {
-        pokeAPI.get({ resource_uri: '/api/v2/pokemon-species/' + trueBotName.toLowerCase() + '/' }).then(function (evolve) {
-          var chainEvolution = evolve.evolution_chain.url.split('/')
-          pokeAPI.get({ resource_uri: '/api/v2/evolution-chain/' + chainEvolution[chainEvolution.length - 2] + '/' }).then(function (pokemonEvolutionChain) {
-            var evolutionChain = pokemonEvolutionChain.chain
-            var pokemonNameTest = evolutionChain.species.name
-            while (pokemonNameTest !== trueBotName.toLowerCase()) {
-              evolutionChain = evolutionChain.evolves_to[0]
-              pokemonNameTest = evolutionChain.species.name
-            }
-            if (evolutionChain.evolves_to[0] !== null) {
-              pokemonToBe = evolutionChain.evolves_to[0].species.name
-              trueBotName = pokemonToBe
-            } else {
-              pokemonToBe = trueBotName
-            }
-            setPokemon(pokemonToBe, msg)
-          })
+  } else if (messageArray[0] === '!pokemon') {
+    if (messageArray[1] === 'evolve') {
+      pokeAPI.get({ resource_uri: '/api/v2/pokemon-species/' + trueBotName.toLowerCase() + '/' }).then(function (evolve) {
+        var chainEvolution = evolve.evolution_chain.url.split('/')
+        pokeAPI.get({ resource_uri: '/api/v2/evolution-chain/' + chainEvolution[chainEvolution.length - 2] + '/' }).then(function (pokemonEvolutionChain) {
+          var evolutionChain = pokemonEvolutionChain.chain
+          var pokemonNameTest = evolutionChain.species.name
+          while (pokemonNameTest !== trueBotName.toLowerCase()) {
+            evolutionChain = evolutionChain.evolves_to[0]
+            pokemonNameTest = evolutionChain.species.name
+          }
+          if (evolutionChain.evolves_to[0] !== null) {
+            pokemonToBe = evolutionChain.evolves_to[0].species.name
+            trueBotName = pokemonToBe
+          } else {
+            pokemonToBe = trueBotName
+          }
+          setPokemon(pokemonToBe, msg)
         })
-      } else {
-        pokemonToBe = messageArray[1]
-        trueBotName = pokemonToBe
-        setPokemon(pokemonToBe, msg)
-      }
+      })
+    } else {
+      pokemonToBe = messageArray[1]
+      trueBotName = pokemonToBe
+      setPokemon(pokemonToBe, msg)
     }
   }
+
   var stream = T.stream('user')
 
   stream.on('tweet', function (Msg) {
@@ -147,7 +149,7 @@ client.on('message', msg => {
   })
 })
 
-function setPokemon (pokemonToBe, message) {
+function setPokemon (pokemonToBe, msg) {
   pokeAPI.get({ resource_uri: '/api/v2/pokemon/' + pokemonToBe + '/' }).then(function (pokemon) {
     var nationalID = pokemon.id
     var pokemonName = pokemon.name
@@ -179,7 +181,7 @@ function setPokemon (pokemonToBe, message) {
 
     var finalMessage = "Hello, I'm " + pokemonName + '. In the pokedex, you will find me at id ' + nationalID + '.\n' + typesFinal + 'I weigth ' + pokemonWeight / 10 + ' kg and measure ' + pokemonHeight / 10 + ' m.'
 
-    message.channel.send(finalMessage)
+    msg.channel.send(finalMessage)
   })
 }
 
