@@ -82,3 +82,16 @@ Commande principale pour obtenir 3 résultats :
 ```
 !youtube <recherche souhaitée>
 ```
+Twitter
+-------
+#### Installation
+```
+npm install twitter
+```
+#### Commandes
+Commande pour écrire un tweet :
+```
+!tweet <ce qu'on veut écrire>
+```
+Lorsque quelqu'un nous tague dans un tweet, le tweet s'affiche automatiquement.
+Les tweets ne doivent pas faire plus de 140 caractères.
