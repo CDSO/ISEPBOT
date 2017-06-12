@@ -10,6 +10,13 @@ var pokemonToBe = ''
 var trueBotName = ''
 
 const client = new Discord.Client()
+var weather = require('Openweather-Node')
+// set your API key if you have one
+weather.setAPPID('e7ee6e42be52218f259c8060581b6a3c')
+// set the culture
+weather.setCulture('fr')
+// set the forecast type
+weather.setForecastType('daily')
 
 const Translate = require('@google-cloud/translate')
 const projectId = 'Google ChatBot'
@@ -251,13 +258,6 @@ client.on('message', msg => {
       console.log('Something went wrong when retrieving an access token', err)
     })
   }
-  var weather = require('Openweather-Node')
-    // set your API key if you have one
-  weather.setAPPID('e7ee6e42be52218f259c8060581b6a3c')
-    // set the culture
-  weather.setCulture('fr')
-    // set the forecast type
-  weather.setForecastType('daily')
 
   if (msg.content.startsWith('!weather') || msg.content.startsWith('!forecast')) {
     var location = msg.content.split(' ').slice(1)
