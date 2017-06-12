@@ -232,7 +232,7 @@ client.on('message', msg => {
         var d = new Date()
         for (var i = 1; i < 6; i++) {
           var dayName = days[d.getDay() + i]
-          msg.channel.send(dayName + ' il fera : ' + data.values.list[i].temp.day - 273.15).toFixed(2) + '°C à ' + location)
+          msg.channel.send(dayName + ' il fera : ' + (data.values.list[i].temp.day - 273.15).toFixed(2) + '°C à ' + location)
         }
       })
     }
