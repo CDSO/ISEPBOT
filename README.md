@@ -36,6 +36,7 @@ Pour obtenir les prévisions de la météo sur 5 jours d'une ville (le nom de vi
 ```
 !forecast <ville>           
 ```
+**Attention** : La fonction !forecast ne fonctionne pas toujours (raison inconnue), si le bot cesse de fonctionner, relancer le bot et réessayer
 
 Google Translate
 ---------
