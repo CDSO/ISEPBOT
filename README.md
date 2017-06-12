@@ -48,7 +48,7 @@ Il faudra créer un nouveau projet, lors du suivi des instructions : le nommer "
 #### Commandes
 Les commandes pour demander au bot de traduire sont : 
 ```
-!transalte <phrase> <lang>         
+!translate <phrase> <lang>         
 ```
 Commencer sa phrase par "!translate"
 
@@ -87,6 +87,7 @@ Twitter
 #### Installation
 ```
 npm install twitter
+npm install twit
 ```
 #### Commandes
 Commande pour écrire un tweet :
