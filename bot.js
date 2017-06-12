@@ -53,16 +53,11 @@ client.on('message', msg => {
   if (messageArray[0] === '!translate') {
     const targetLanguage = messageArray[messageArray.length - 1]
     var messageToTranslate = messageArray.slice(1, messageArray.length - 1)
-    var text = ''
-    var i = 0
-    for (i = 0; i < messageToTranslate.length; i++) {
-      text = text + messageToTranslate[i] + ' '
-    }
-    text = ' says : ' + text
+    var text = messageToTranslate.join(' ')
     translateClient.translate(text, targetLanguage)
         .then((results) => {
           const translation = results[0]
-          msg.channel.send(author + translation)
+          msg.channel.send(author + 'says : ' + translation)
         })
         .catch((err) => {
           console.error('ERROR:', err)
